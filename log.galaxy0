@@ -1,0 +1,8 @@
+# of devices: 2
+devid: 0
+Device PCI Bus ID / PCI location ID: 5 / 0
+N_BLOCK: 128
+N_THREAD: 960
+Time: 4331.025839 (ms)
+flop: 6.957847e+12
+Gflops: 1606.512470

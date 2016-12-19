@@ -1,0 +1,62 @@
+#Time-stamp: <2008-06-25 00:26:27 hamada>
+
+------------------------------------------
+インストール及びコンパイルと実行は以下の通りです。
+tar xzvf fma.20080625.tar.gz 
+cd fma
+make clean
+make
+./run.x
+
+------------------------------------------
+GT200用にしてありますが、G92を使う場合は
+main.cuのMultiprocessor数を下記のように
+30から16に変更して再コンパイルしてください。
+// #define NUM_MP (30) 
+#define NUM_MP (16) 
+
+------------------------------------------
+sm_10とsm_13の違いを比べる場合には
+MakefileのGPU_ARCを以下のように変更して下さい。
+#GPU_ARC = --gpu-name 'sm_13'
+GPU_ARC = --gpu-name 'sm_10'
+
+------------------------------------------
+倍精度のFMA性能を計測したい場合には
+GPU_ARCをsm_13に変更して
+main.cuのREALマクロを以下のように変更して下さい。
+//#define REAL float
+#define REAL double
+
+------------------------------------------
+以下、こちらGT200での計測結果です。
+
+GT200, 単精度
+Using device 0: GT200
+Time: 2242.818117 (ms)
+Gflops: 517.046461
+
+GT200, 倍精度
+Using device 0: GT200
+Time: 18869.470119 (ms)
+Gflops: 61.455948
+
+こちらのGT200のdeviceQueryは以下の通りです。
+
+Device 0: "GT200"
+  Major revision number:                         1
+  Minor revision number:                         3
+  Total amount of global memory:                 1073479680 bytes
+  Number of multiprocessors:                     30
+  Number of cores:                               240
+  Total amount of constant memory:               65536 bytes
+  Total amount of shared memory per block:       16384 bytes
+  Total number of registers available per block: 16384
+  Warp size:                                     32
+  Maximum number of threads per block:           512
+  Maximum sizes of each dimension of a block:    512 x 512 x 64
+  Maximum sizes of each dimension of a grid:     65535 x 65535 x 1
+  Maximum memory pitch:                          262144 bytes
+  Texture alignment:                             256 bytes
+  Clock rate:                                    1.08 GHz
+  Concurrent copy and execution:                 Yes
